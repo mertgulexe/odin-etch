@@ -12,8 +12,9 @@ html {
 
 :root {
   --crimson: #A63C3C;
-  --red: #C94C4C;
-  --light-red: #D9685A;
+  --crimson-transparent: #A63C3C3f;
+  --red: #D9685A;
+  --red-transparent: #D9685A3f;
 }
 
 body {
@@ -24,8 +25,7 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin: 50px auto;
-}
+  }
 
 .toy-frame span {
   display: inline-block;
@@ -55,11 +55,11 @@ body {
   flex-direction: column;
   justify-self: flex-start;
   align-items: center;
-  background-color: var(--light-red);
-  width: 1200px;
-  height: 800px;
-  border-bottom: 9px solid var(--crimson);
-  border-left: 6px solid var(--crimson);
+  background-color: var(--red);
+  width: 1000px;
+  height: 750px;
+  border-bottom: 4px solid var(--crimson-transparent);
+  border-left: 3px solid var(--crimson-transparent);
   border-radius: 50px;
 }
 
@@ -67,8 +67,9 @@ body {
 .toy-frame .left-section .bottom-slider,
 .toy-frame .left-section .sizing-button-container .sizing-button {
   background-color: var(--crimson);
-  border: 1px solid var(--light-red);
+  border: 1px solid var(--red);
   border-radius: 50px;
+  box-shadow: 1px -2px 12px rgba(0, 0, 0, 0.3);
 }
 
 .toy-frame .right-section {
@@ -97,14 +98,17 @@ body {
 }
 
 .main-screen .title {
-  background-color: rgba(255, 255, 255, 0.76);
+  background-color: var(--crimson-transparent);
   height: 50px;
-  width: 100%;
+  width: 90%;
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
+  border-radius: 8px;
+  border-top: 3px solid rgba(0, 0, 0, 0.05);
+  border-right: 2px solid rgba(0, 0, 0, 0.05);
 }
 
 .main-screen .mesh {
@@ -117,7 +121,10 @@ body {
   justify-content: center;
   align-items: center;
   border-radius: 8px;
+  border-top: 3px solid rgba(0, 0, 0, 0.05);
+  border-right: 2px solid rgba(0, 0, 0, 0.05);
 }
+
 .main-screen .mesh .mesh-content {
   width: 100%;
   height: 100%;
