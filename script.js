@@ -1,85 +1,101 @@
 let isMouseDown = false;
+let defaultPenColor = "#494949";
 const HOVER_CLASS_NAME = "hovered";
+const RANDOM_COLOR_CLASS_NAME = "random-color";
 const MESH_CONTENT_CLASS_NAME = ".mesh-content";
+const entireFrame = document.querySelector(".entire-frame");
 const mesh = document.querySelector(".mesh");
-const meshHeight = mesh.clientHeight;
-const meshWidth = mesh.clientWidth;
+const MESH_HEIGHT = mesh.clientHeight;
+const MESH_WIDTH = mesh.clientWidth;
 const sizingButton = document.querySelectorAll(".sizing-button-container .sizing-button");
+const sweepButton = document.querySelector(".sweep-button");
+const colorButton = document.querySelector(".color-button");
+let meshContent = setMeshSize();
 
-window.addEventListener("DOMContentLoaded", () => {
-    setMeshSize({
-        currentTarget: {
-            dataset: {
-                xAxis: 10,
-                yAxis: 20
-            }
-        }
-    });
-    
+document.addEventListener("mousedown", () => isMouseDown = true);
+document.addEventListener("mouseup", () => isMouseDown = false);
+document.addEventListener("blur", () => isMouseDown = false);
+entireFrame.addEventListener("contextmenu", e => e.preventDefault());
+entireFrame.addEventListener("dragstart", e => e.preventDefault());
+
+sizingButton.forEach(button => {
+    button.addEventListener("click", event => {
+        meshContent = setMeshSize(
+            event.currentTarget.dataset.xAxis,
+            event.currentTarget.dataset.yAxis
+        );
+    })
+});
+sweepButton.addEventListener("click", resetMesh);
+colorButton.addEventListener("click", () => {
+    meshContent.forEach((div) => {
+        div.classList.toggle(RANDOM_COLOR_CLASS_NAME);
+    })
 });
 
-window.addEventListener("mousedown", () => isMouseDown = true);
-window.addEventListener("mouseup", () => isMouseDown = false);
-
-sizingButton.forEach(
-    button => {
-        button.addEventListener("click", setMeshSize)
-    }
-);
-
-function setMeshSize(event) {
+function setMeshSize(xAxis=10, yAxis=20) {
     mesh.innerHTML = "";
-    const xAxis = parseInt(event.currentTarget.dataset.xAxis);
-    const yAxis = parseInt(event.currentTarget.dataset.yAxis);
-    
     for (let i = 0; i < (xAxis * yAxis); i++) {
         const div = document.createElement("div");
         div.classList.add("mesh-content");
         mesh.appendChild(div);
-    }
+    }    
+    const meshBlocks = document.querySelectorAll(MESH_CONTENT_CLASS_NAME);
     
-    const meshContent = document.querySelectorAll(MESH_CONTENT_CLASS_NAME);
-    
-    meshContent.forEach(
+    meshBlocks.forEach(
         div => {
-            div.style.width = `${meshWidth / yAxis}px`;
-            div.style.height = `${meshHeight / xAxis}px`;
+            div.style.width = `${MESH_WIDTH / yAxis}px`;
+            div.style.height = `${MESH_HEIGHT / xAxis}px`;
         }
     );
-    
-    addColorEventListeners(meshContent);
+    meshBlocks.forEach(div => addColorEventListeners(div));
+    return meshBlocks;
 }
 
 function addColorEventListeners(element) {
-    element.forEach(
-        div => {
-            div.addEventListener(
-                "mouseover",
-                e => {
-                    e.currentTarget.classList.add(HOVER_CLASS_NAME);
-                    if (isMouseDown) {
-                        e.currentTarget.classList.add("clicked");
-                    }
-                }
-            );
-            div.addEventListener(
-                "transitionend",
-                e => e.currentTarget.classList.remove(HOVER_CLASS_NAME)
-            );
-            div.addEventListener(
-                "mousedown",
-                e => {
-                    isMouseDown = true;
-                    e.target.classList.add("clicked");
-                }
-            );
-            div.addEventListener(
-                "mouseup",
-                e => {
-                    isMouseDown = false;
-                    e.target.classList.remove("clicked");
-                }
-            )
-        }
-    );
+    element.addEventListener("mousedown", e => setDrawingColor(e));
+    element.addEventListener("mouseover", e => {
+        const currentTarget = e.currentTarget;
+        const isUnhovered = !currentTarget.classList.contains(HOVER_CLASS_NAME);
+        const isUncolored = currentTarget.style.backgroundColor === '';
+        if (isUnhovered && isUncolored) {
+            currentTarget.classList.add(HOVER_CLASS_NAME);
+        }        
+        if (isMouseDown) setDrawingColor(e);
+    });
+    element.addEventListener("transitionend", e => {
+        e.currentTarget.classList.remove(HOVER_CLASS_NAME);
+    });
 }
+
+function resetMesh(event) {
+    event.currentTarget.classList.toggle("right-side");
+    setTimeout(() => {
+        meshContent.forEach((div) => div.style.backgroundColor = '');
+    }, 400);
+}
+
+function setDrawingColor(event) {
+    const currentTarget = event.currentTarget;
+    if (currentTarget.classList.contains(RANDOM_COLOR_CLASS_NAME)) {
+        currentTarget.style.backgroundColor = "red";
+        currentTarget.classList.remove(HOVER_CLASS_NAME);
+    } else {
+        currentTarget.style.backgroundColor = defaultPenColor;
+        currentTarget.classList.remove(HOVER_CLASS_NAME);
+    }
+}
+
+/* TODO:
+[] Randomise defaultPenColor color.
+[] Add animations to buttons.
+[] Change the color of the pressed button.
+[] Change the color of the buttons altogether. They are ugly!
+[] Change the title.
+[] Fix the title box overflow (it is larger than the mesh box).
+[] Add footer with links to the original project and my GitHub.
+[] Change font type, color and transparency.
+[] Check performance drop on large meshes while dev tool is open!
+    * It is probably due to dynamically created flex items.
+    * Grid is not allowed in this project, so I cannot use it.
+*/
