@@ -19,20 +19,21 @@ html {
 
 body {
   background-color: #8FAE98;
+  user-select: none; /* Mert: This prevents text selection. */
 }
 
-.toy-frame {
+.entire-frame {
   display: flex;
   flex-direction: row;
   justify-content: center;
   }
 
-.toy-frame span {
+.entire-frame span {
   display: inline-block;
   white-space: nowrap;
 }
 
-.toy-frame .left-section .sizing-button-container {
+.entire-frame .left-section .sizing-button-container {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
@@ -44,14 +45,14 @@ body {
 .sizing-button-container .sizing-button {
   margin-top: 55px;
   margin-bottom: -8px;
-  height: 50px;
+  height: 35px;
   width: 75px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.toy-frame .left-section .main-screen {
+.entire-frame .left-section .main-screen {
   display: flex;
   flex-direction: column;
   justify-self: flex-start;
@@ -59,22 +60,24 @@ body {
   background-color: var(--red);
   border-bottom: 4px solid var(--crimson-transparent);
   border-left: 3px solid var(--crimson-transparent);
-  border-radius: 50px;
+  border-radius: 20px;
 }
 
-.toy-frame .right-section,
-.toy-frame .left-section .bottom-slider,
-.toy-frame .left-section .sizing-button-container .sizing-button {
+.entire-frame .right-section,
+.entire-frame .left-section .bottom-slider,
+.entire-frame .left-section .sizing-button-container .sizing-button {
+  cursor: pointer;
   background-color: var(--crimson);
   border: 1px solid var(--red);
   border-radius: 8px;
   box-shadow: 1px -2px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.75s ease-in-out;
 }
 
-.toy-frame .right-section {
+.entire-frame .right-section {
   margin-top: calc(55px * 3);
   margin-left: -8px;
-  width: 50px; 
+  width: 35px; 
   height: 75px;
   display: flex;
   flex-direction: column;
@@ -82,19 +85,24 @@ body {
   align-items: center;
 }
 
-.toy-frame .right-section span {
+.entire-frame .right-section span {
   transform: rotate(-90deg);
 }
 
-.toy-frame .bottom-slider {
+.entire-frame .bottom-slider {
   margin-top: -8px;
   margin-left: 55px;
-  height: 50px;
+  height: 35px;
   width: 75px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  transform: rotate(2deg);
+}
+
+.entire-frame .bottom-slider.right-side {
+  transform: translateX(calc(800px - 55px)) rotate(-2deg);
 }
 
 .main-screen .title {
@@ -132,9 +140,5 @@ body {
 }
 
 .mesh-content.hovered {
-  background-color: rgba(139, 139, 139, 0.45);
-}
-
-.mesh-content.clicked {
-  background-color: rgb(73, 73, 73);
+  background-color: rgba(139, 139, 139, 0.25);
 }
