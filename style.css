@@ -126,5 +126,11 @@ body {
 
 .main-screen .mesh .mesh-content {
   flex: 0 0 auto;
-  border: 1px solid #a1a1a14b;
+  border-left: 1px solid #a1a1a14b;
+  border-top: 1px solid #a1a1a14b;
+  transition: all 0.2s ease;
+}
+
+.mesh-content.hovered {
+  background-color: rgba(139, 139, 139, 0.45);
 }
