@@ -74,6 +74,33 @@ body {
   transition: all 0.75s ease-in-out;
 }
 
+.sizing-button-container .sizing-button:nth-of-type(1) {
+  transform: rotate(3deg);
+  transition: all 0.55s ease;
+}
+
+.sizing-button-container .sizing-button:nth-of-type(2) {
+  transform: rotate(-2deg);
+  transition: all 0.55s ease;
+}
+
+.sizing-button-container .sizing-button:nth-of-type(3) {
+  transform: rotate(-3deg);
+  transition: all 0.75s cubic-bezier(0.24, 1.34, 0.53, 1.48);
+}
+
+.sizing-button-container .sizing-button:nth-of-type(1).clicked {
+  transform: rotate(9deg);
+}
+
+.sizing-button-container .sizing-button:nth-of-type(2).clicked {
+  transform: rotate(-19deg);
+}
+
+.sizing-button-container .sizing-button:nth-of-type(3).clicked {
+  transform: rotate(-125deg);
+}
+
 .entire-frame .right-section {
   margin-top: calc(55px * 3);
   margin-left: -8px;
