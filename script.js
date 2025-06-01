@@ -1,3 +1,4 @@
+let isMouseDown = false;
 const HOVER_CLASS_NAME = "hovered";
 const MESH_CONTENT_NAME = ".mesh-content";
 const mesh = document.querySelector(".mesh");
@@ -16,6 +17,9 @@ window.addEventListener("DOMContentLoaded", () => {
     });
     
 });
+
+window.addEventListener("mousedown", () => isMouseDown = true);
+window.addEventListener("mouseup", () => isMouseDown = false);
 
 sizingButton.forEach(
     button => {
@@ -43,14 +47,39 @@ function setMeshSize(event) {
         }
     );
     
-    addHoverListeners(meshContent);
+    addColorEventListeners(meshContent);
 }
 
-function addHoverListeners(element) {
+function addColorEventListeners(element) {
     element.forEach(
         div => {
-            div.addEventListener("mouseover", e => e.currentTarget.classList.add(HOVER_CLASS_NAME));
-            div.addEventListener("mouseout", e => e.currentTarget.classList.remove(HOVER_CLASS_NAME));
+            div.addEventListener(
+                "mouseover",
+                e => {
+                    e.currentTarget.classList.add(HOVER_CLASS_NAME);
+                    if (isMouseDown) {
+                        e.currentTarget.classList.add("clicked");
+                    }
+                }
+            );
+            div.addEventListener(
+                "transitionend",
+                e => e.currentTarget.classList.remove(HOVER_CLASS_NAME)
+            );
+            div.addEventListener(
+                "mousedown",
+                e => {
+                    isMouseDown = true;
+                    e.target.classList.add("clicked");
+                }
+            );
+            div.addEventListener(
+                "mouseup",
+                e => {
+                    isMouseDown = false;
+                    e.target.classList.remove("clicked");
+                }
+            )
         }
     );
 }
