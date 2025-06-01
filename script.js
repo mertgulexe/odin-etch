@@ -1,6 +1,6 @@
 let isMouseDown = false;
 const HOVER_CLASS_NAME = "hovered";
-const MESH_CONTENT_NAME = ".mesh-content";
+const MESH_CONTENT_CLASS_NAME = ".mesh-content";
 const mesh = document.querySelector(".mesh");
 const meshHeight = mesh.clientHeight;
 const meshWidth = mesh.clientWidth;
@@ -38,7 +38,7 @@ function setMeshSize(event) {
         mesh.appendChild(div);
     }
     
-    const meshContent = document.querySelectorAll(MESH_CONTENT_NAME);
+    const meshContent = document.querySelectorAll(MESH_CONTENT_CLASS_NAME);
     
     meshContent.forEach(
         div => {
