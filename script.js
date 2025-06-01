@@ -24,7 +24,8 @@ sizingButton.forEach(button => {
             event.currentTarget.dataset.xAxis,
             event.currentTarget.dataset.yAxis
         );
-    })
+        event.currentTarget.classList.add("clicked");
+    });
 });
 sweepButton.addEventListener("click", resetMesh);
 colorButton.addEventListener("click", () => {
@@ -89,6 +90,7 @@ function setDrawingColor(event) {
 /* TODO:
 [] Randomise defaultPenColor color.
 [] Add animations to buttons.
+[] Add transitionend and event.propertyName === "transform" to animated buttons.
 [] Change the color of the pressed button.
 [] Change the color of the buttons altogether. They are ugly!
 [] Change the title.
