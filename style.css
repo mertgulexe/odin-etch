@@ -128,7 +128,7 @@ body {
   flex: 0 0 auto;
   border-left: 1px solid #a1a1a14b;
   border-top: 1px solid #a1a1a14b;
-  transition: background-color 0.25s ease-in-out;
+  transition: background-color 0.25s ease-out;
 }
 
 .mesh-content.hovered {
