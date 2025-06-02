@@ -41,6 +41,7 @@ sizingButton.forEach(button => {
 });
 sweepButton.addEventListener("click", resetMesh);
 colorButton.addEventListener("click", changeDrawingColor);
+addDelegatedEventListenersForMeshBlocks();
 
 function setMeshSize(xAxis=10, yAxis=20) {
     mesh.innerHTML = "";
@@ -48,16 +49,14 @@ function setMeshSize(xAxis=10, yAxis=20) {
         const div = document.createElement("div");
         div.classList.add(MESH_CONTENT_SELECTOR.slice(1));
         mesh.appendChild(div);
-    }    
-    const meshBlocks = document.querySelectorAll(MESH_CONTENT_SELECTOR);
-    
+    }
+    const meshBlocks = document.querySelectorAll(MESH_CONTENT_SELECTOR);    
     meshBlocks.forEach(
         div => {
             div.style.width = `${MESH_WIDTH / yAxis}px`;
             div.style.height = `${MESH_HEIGHT / xAxis}px`;
         }
     );
-    addDelegatedEventListenersForMeshBlocks();
     // meshBlocks.forEach(div => addColorEventListeners(div));
     return meshBlocks;
 }
@@ -112,13 +111,7 @@ function addDelegatedEventListenersForMeshBlocks() {
 function resetMesh(event) {
     event.currentTarget.classList.toggle("right-side");
     setTimeout(
-        () => {
-            meshContent.forEach((div) => {
-                div.classList.remove(BUTTON_CLICK_SELECTOR);
-                div.style.opacity = 1;
-                div.style.backgroundColor = '';
-            });
-        },
+        () => meshContent.forEach(resetCellStyling),
         400
     );
 }
@@ -166,6 +159,12 @@ function changeDrawingColor(event) {
             );
         }
     );
+}
+
+function resetCellStyling(element) {
+    element.classList.remove(BUTTON_CLICK_SELECTOR, HOVER_SELECTOR);
+    element.style.opacity = 1;
+    element.style.backgroundColor = '';
 }
 
 /* TODO:
