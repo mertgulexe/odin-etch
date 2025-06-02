@@ -122,8 +122,7 @@ function resetMesh(event) {
     );
 }
 
-function setDrawingColor(event) {
-    const currentTarget = event.currentTarget;
+function setDrawingColor(currentTarget) {
     if (penColor === "rainbow") {
         let randomColor = Math.floor(Math.random() * (16**8 - 1));  // alpha channel included
         randomColor = '#' + randomColor.toString(16).padStart(8, '0');
@@ -177,7 +176,7 @@ function changeDrawingColor(event) {
 [x] Fix the title box overflow (it is larger than the mesh box).
 [x] Add footer with links to the project repository.
 [x] Change font type, color and transparency.
-[ ] Check performance drop on large meshes while dev tool is open!
-    * It is probably due to dynamically created flex items.
-    * Grid is not allowed in this project, so I cannot use it.
+[x] Check performance drop on large meshes while dev tool is open!
+    * It is probably due to dynamically created flex items. Grid is not allowed in this project, so I cannot use it.
+    * The event listeners are delegated, so it should not be a problem.
 */
