@@ -178,18 +178,18 @@ body {
   border-radius: 8px;
 }
 
-.main-screen .mesh .mesh-content {
+.main-screen .mesh .mesh-cell {
   flex: 0 0 auto;
   border-left: 1px solid #a1a1a14b;
   border-top: 1px solid #a1a1a14b;
   transition: background-color 0.25s ease-out;
 }
 
-.mesh-content.hovered {
+.mesh-cell.hovered {
   background-color: rgba(139, 139, 139, 0.25);
 }
 
-.mesh-content.clicked {
+.mesh-cell.clicked {
   background-color: rgb(73, 73, 73);
 }
 
