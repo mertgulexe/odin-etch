@@ -48,8 +48,11 @@ colorButton.addEventListener("click", (event) => {
     requestAnimationFrame(
         () => {
             target.classList.toggle(BUTTON_CLICK_CLASS_NAME);
-            let buttonText = target.querySelector("span").textContent;
-            buttonText = isGrayscale ? "Greyscale": "Colorize";
+            const targetButton = target.querySelector("span");
+            setTimeout(
+                () => targetButton.textContent = isGrayscale ? "Gray": "Colored",
+                400
+            );
         }
     );
 });
