@@ -127,6 +127,7 @@ function setDrawingColor(currentTarget) {
     if (penColor === "rainbow") {
         let randomColor = Math.floor(Math.random() * (16**8 - 1));  // alpha channel included
         randomColor = '#' + randomColor.toString(16).padStart(8, '0');
+        currentTarget.style.opacity = 1;  // remove existing opacity from gray cells
         currentTarget.style.backgroundColor = randomColor;
         currentTarget.classList.remove(HOVER_SELECTOR);
     } else {
