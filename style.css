@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Just+Another+Hand&display=swap');
+
 html {
   box-sizing: border-box;
 }
@@ -20,6 +22,9 @@ html {
 body {
   background-color: #8FAE98;
   user-select: none; /* Mert: This prevents text selection. */
+  color: #913d32;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.8rem;
 }
 
 .entire-frame {
@@ -139,7 +144,7 @@ body {
 
 .main-screen .title {
   background-color: var(--crimson-transparent);
-  height: 50px;
+  height: 65px;
   width: 80%;
   text-align: center;
   display: flex;
@@ -149,7 +154,16 @@ body {
   border-radius: 8px;
   border-top: 3px solid rgba(0, 0, 0, 0.05);
   border-right: 2px solid rgba(0, 0, 0, 0.05);
+  font-size: 2.6rem;
+  font-family: "Just Another Hand", cursive;
+  font-weight: 400;
+  font-style: normal;
 }
+
+.main-screen .title span{
+  margin-bottom: 8px;
+}
+
 
 .main-screen .mesh {
   background-color: rgba(244, 255, 219, 0.60);
@@ -173,4 +187,13 @@ body {
 
 .mesh-content.hovered {
   background-color: rgba(139, 139, 139, 0.25);
+}
+
+footer {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
