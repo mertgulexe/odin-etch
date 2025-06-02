@@ -93,7 +93,7 @@ function setDrawingColor(event) {
     const currentTarget = event.currentTarget;
     if (penColor === "rainbow") {
         let randomColor = Math.floor(Math.random() * (16**8 - 1));  // alpha channel included
-        randomColor = randomColor.toString(16).padStart(9, '#');
+        randomColor = '#' + randomColor.toString(16).padStart(8, '0');
         currentTarget.style.backgroundColor = randomColor;
         currentTarget.classList.remove(HOVER_CLASS_NAME);
     } else {
