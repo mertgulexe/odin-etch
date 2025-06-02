@@ -2,9 +2,9 @@ let isMouseDown = false;
 let penColor = "gray";
 let initialPenColorOpacity = 0.25;
 const DEFAULT_PEN_COLOR = "rgb(73, 73, 73)";
-const HOVER_CLASS_NAME = "hovered";
-const MESH_CONTENT_CLASS_NAME = ".mesh-content";
-const BUTTON_CLICK_CLASS_NAME = "clicked";
+const HOVER_SELECTOR = "hovered";
+const MESH_CONTENT_SELECTOR = ".mesh-content";
+const BUTTON_CLICK_SELECTOR = "clicked";
 const entireFrame = document.querySelector(".entire-frame");
 const mesh = document.querySelector(".mesh");
 const MESH_HEIGHT = mesh.clientHeight;
@@ -27,13 +27,13 @@ sizingButton.forEach(button => {
             event.currentTarget.dataset.yAxis
         );
         const target = event.currentTarget;
-        requestAnimationFrame(() => target.classList.add(BUTTON_CLICK_CLASS_NAME));
+        requestAnimationFrame(() => target.classList.add(BUTTON_CLICK_SELECTOR));
     });
     button.addEventListener("transitionend", event => {
         const target = event.currentTarget;
         if (event.propertyName === "transform") {
             setTimeout(
-                () => target.classList.remove(BUTTON_CLICK_CLASS_NAME),
+                () => target.classList.remove(BUTTON_CLICK_SELECTOR),
                 Math.floor(Math.random() * 2000) + 200
             );
         }
@@ -49,7 +49,7 @@ function setMeshSize(xAxis=10, yAxis=20) {
         div.classList.add("mesh-content");
         mesh.appendChild(div);
     }    
-    const meshBlocks = document.querySelectorAll(MESH_CONTENT_CLASS_NAME);
+    const meshBlocks = document.querySelectorAll(MESH_CONTENT_SELECTOR);
     
     meshBlocks.forEach(
         div => {
@@ -65,15 +65,15 @@ function addColorEventListeners(element) {
     element.addEventListener("mousedown", e => setDrawingColor(e));
     element.addEventListener("mouseover", e => {
         const currentTarget = e.currentTarget;
-        const isUnhovered = !currentTarget.classList.contains(HOVER_CLASS_NAME);
+        const isUnhovered = !currentTarget.classList.contains(HOVER_SELECTOR);
         const isUncolored = currentTarget.style.backgroundColor === '';
         if (isUnhovered && isUncolored) {
-            currentTarget.classList.add(HOVER_CLASS_NAME);
+            currentTarget.classList.add(HOVER_SELECTOR);
         }
         if (isMouseDown) setDrawingColor(e);
     });
     element.addEventListener("transitionend", e => {
-        e.currentTarget.classList.remove(HOVER_CLASS_NAME);
+        e.currentTarget.classList.remove(HOVER_SELECTOR);
     });
 }
 
@@ -82,7 +82,7 @@ function resetMesh(event) {
     setTimeout(
         () => {
             meshContent.forEach((div) => {
-                div.classList.remove(BUTTON_CLICK_CLASS_NAME);
+                div.classList.remove(BUTTON_CLICK_SELECTOR);
                 div.style.backgroundColor = '';
             });
         },
@@ -96,12 +96,12 @@ function setDrawingColor(event) {
         let randomColor = Math.floor(Math.random() * (16**8 - 1));  // alpha channel included
         randomColor = '#' + randomColor.toString(16).padStart(8, '0');
         currentTarget.style.backgroundColor = randomColor;
-        currentTarget.classList.remove(HOVER_CLASS_NAME);
+        currentTarget.classList.remove(HOVER_SELECTOR);
     } else {
-        const isAlreadyColored = currentTarget.classList.contains(BUTTON_CLICK_CLASS_NAME);
+        const isAlreadyColored = currentTarget.classList.contains(BUTTON_CLICK_SELECTOR);
         currentTarget.style.backgroundColor = DEFAULT_PEN_COLOR;
-        currentTarget.classList.add(BUTTON_CLICK_CLASS_NAME);
-        currentTarget.classList.remove(HOVER_CLASS_NAME);
+        currentTarget.classList.add(BUTTON_CLICK_SELECTOR);
+        currentTarget.classList.remove(HOVER_SELECTOR);
         if (isAlreadyColored) {
             setPenColorOpacity(currentTarget);
         } else {
@@ -121,11 +121,11 @@ function setPenColorOpacity(element) {
 
 function changeDrawingColor(event) {
     const target = event.currentTarget;
-    const isGrayscale = !target.classList.contains(BUTTON_CLICK_CLASS_NAME);
+    const isGrayscale = !target.classList.contains(BUTTON_CLICK_SELECTOR);
     penColor = isGrayscale ? "rainbow": "gray";  // change pen color
     requestAnimationFrame(
         () => {
-            target.classList.toggle(BUTTON_CLICK_CLASS_NAME);
+            target.classList.toggle(BUTTON_CLICK_SELECTOR);
             const targetButton = target.querySelector("span");
             setTimeout(
                 () => targetButton.textContent = isGrayscale ? "Gray": "Colored",
