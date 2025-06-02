@@ -57,25 +57,57 @@ function setMeshSize(xAxis=10, yAxis=20) {
             div.style.height = `${MESH_HEIGHT / xAxis}px`;
         }
     );
-    meshBlocks.forEach(div => addColorEventListeners(div));
+    addDelegatedEventListenersForMeshBlocks();
+    // meshBlocks.forEach(div => addColorEventListeners(div));
     return meshBlocks;
 }
 
-function addColorEventListeners(element) {
-    element.addEventListener("mousedown", e => setDrawingColor(e));
-    element.addEventListener("mouseover", e => {
-        const currentTarget = e.currentTarget;
-        const isUnhovered = !currentTarget.classList.contains(HOVER_SELECTOR);
-        const isUncolored = currentTarget.style.backgroundColor === '';
-        if (isUnhovered && isUncolored) {
-            currentTarget.classList.add(HOVER_SELECTOR);
-        }
-        if (isMouseDown) setDrawingColor(e);
+
+function addDelegatedEventListenersForMeshBlocks() {
+    mesh.addEventListener("mousedown", (e) => {
+        const target = e.target.closest(MESH_CONTENT_SELECTOR);
+        if (!target || !mesh.contains(target)) return;
+        setDrawingColor(target);
     });
-    element.addEventListener("transitionend", e => {
-        e.currentTarget.classList.remove(HOVER_SELECTOR);
+
+    mesh.addEventListener("mouseover", (e) => {
+        const target = e.target.closest(MESH_CONTENT_SELECTOR);
+        if (!target || !mesh.contains(target)) return;
+
+        const isUnhovered = !target.classList.contains(HOVER_SELECTOR);
+        const isUncolored = target.style.backgroundColor === '';
+        if (isUnhovered && isUncolored) {
+            target.classList.add(HOVER_SELECTOR);
+        }
+
+        if (isMouseDown) {
+            setDrawingColor(target);
+        }
+    });
+
+    mesh.addEventListener("transitionend", (e) => {
+        const target = e.target.closest(MESH_CONTENT_SELECTOR);
+        if (!target || !mesh.contains(target)) return;
+        target.classList.remove(HOVER_SELECTOR);
     });
 }
+
+
+// function addColorEventListeners(element) {
+//     element.addEventListener("mousedown", e => setDrawingColor(e));
+//     element.addEventListener("mouseover", e => {
+//         const currentTarget = e.currentTarget;
+//         const isUnhovered = !currentTarget.classList.contains(HOVER_SELECTOR);
+//         const isUncolored = currentTarget.style.backgroundColor === '';
+//         if (isUnhovered && isUncolored) {
+//             currentTarget.classList.add(HOVER_SELECTOR);
+//         }
+//         if (isMouseDown) setDrawingColor(e);
+//     });
+//     element.addEventListener("transitionend", e => {
+//         e.currentTarget.classList.remove(HOVER_SELECTOR);
+//     });
+// }
 
 function resetMesh(event) {
     event.currentTarget.classList.toggle("right-side");
