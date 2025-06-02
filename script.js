@@ -46,7 +46,7 @@ function setMeshSize(xAxis=10, yAxis=20) {
     mesh.innerHTML = "";
     for (let i = 0; i < (xAxis * yAxis); i++) {
         const div = document.createElement("div");
-        div.classList.add("mesh-content");
+        div.classList.add(MESH_CONTENT_SELECTOR.slice(1));
         mesh.appendChild(div);
     }    
     const meshBlocks = document.querySelectorAll(MESH_CONTENT_SELECTOR);
