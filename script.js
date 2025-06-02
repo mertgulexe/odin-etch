@@ -116,6 +116,7 @@ function resetMesh(event) {
             meshContent.forEach((div) => {
                 div.classList.remove(BUTTON_CLICK_SELECTOR);
                 div.style.backgroundColor = '';
+                div.style.opacity = 1;
             });
         },
         400
