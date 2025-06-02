@@ -1,7 +1,7 @@
 let isMouseDown = false;
+let penColor = "gray";
 let initialPenColorOpacity = 0.25;
 const HOVER_CLASS_NAME = "hovered";
-const RANDOM_COLOR_CLASS_NAME = "random-color";
 const MESH_CONTENT_CLASS_NAME = ".mesh-content";
 const BUTTON_CLICK_CLASS_NAME = "clicked";
 const entireFrame = document.querySelector(".entire-frame");
@@ -39,23 +39,7 @@ sizingButton.forEach(button => {
     });
 });
 sweepButton.addEventListener("click", resetMesh);
-colorButton.addEventListener("click", (event) => {
-    const target = event.currentTarget;
-    const isGrayscale = !target.classList.contains(BUTTON_CLICK_CLASS_NAME);
-    meshContent.forEach((div) => {
-        div.classList.toggle(RANDOM_COLOR_CLASS_NAME);
-    });
-    requestAnimationFrame(
-        () => {
-            target.classList.toggle(BUTTON_CLICK_CLASS_NAME);
-            const targetButton = target.querySelector("span");
-            setTimeout(
-                () => targetButton.textContent = isGrayscale ? "Gray": "Colored",
-                400
-            );
-        }
-    );
-});
+colorButton.addEventListener("click", changeDrawingColor);
 
 function setMeshSize(xAxis=10, yAxis=20) {
     mesh.innerHTML = "";
@@ -94,14 +78,20 @@ function addColorEventListeners(element) {
 
 function resetMesh(event) {
     event.currentTarget.classList.toggle("right-side");
-    setTimeout(() => {
-        meshContent.forEach((div) => div.style.backgroundColor = '');
-    }, 400);
+    setTimeout(
+        () => {
+            meshContent.forEach((div) => {
+                div.classList.remove(BUTTON_CLICK_CLASS_NAME);
+                div.style.backgroundColor = '';
+            });
+        },
+        400
+    );
 }
 
 function setDrawingColor(event) {
     const currentTarget = event.currentTarget;
-    if (currentTarget.classList.contains(RANDOM_COLOR_CLASS_NAME)) {
+    if (penColor === "rainbow") {
         let randomColor = Math.floor(Math.random() * (16**8 - 1));  // alpha channel included
         randomColor = randomColor.toString(16).padStart(9, '#');
         currentTarget.style.backgroundColor = randomColor;
@@ -110,7 +100,6 @@ function setDrawingColor(event) {
         const isAlreadyColored = currentTarget.classList.contains(BUTTON_CLICK_CLASS_NAME);
         currentTarget.classList.add(BUTTON_CLICK_CLASS_NAME);
         currentTarget.classList.remove(HOVER_CLASS_NAME);
-        console.log(isAlreadyColored);
         if (isAlreadyColored) {
             setPenColorOpacity(currentTarget);
         } else {
@@ -126,6 +115,22 @@ function setPenColorOpacity(element) {
         currentPenColorOpacity += 0.25;
         element.style.opacity = currentPenColorOpacity;
     };
+}
+
+function changeDrawingColor(event) {
+    const target = event.currentTarget;
+    const isGrayscale = !target.classList.contains(BUTTON_CLICK_CLASS_NAME);
+    penColor = isGrayscale ? "rainbow": "gray";  // change pen color
+    requestAnimationFrame(
+        () => {
+            target.classList.toggle(BUTTON_CLICK_CLASS_NAME);
+            const targetButton = target.querySelector("span");
+            setTimeout(
+                () => targetButton.textContent = isGrayscale ? "Gray": "Colored",
+                400
+            );
+        }
+    );
 }
 
 /* TODO:
