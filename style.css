@@ -21,7 +21,7 @@ html {
 
 body {
   background-color: #8FAE98;
-  user-select: none; /* Mert: This prevents text selection. */
+  user-select: none; /* This prevents text selection. */
   color: #913d32;
   font-family: 'Courier New', Courier, monospace;
   font-size: 0.8rem;
@@ -176,6 +176,7 @@ body {
   justify-content: flex-start;
   align-items: flex-start;
   border-radius: 8px;
+  overflow: hidden;  /* Removes bg color bleeds at the corner cells. */
 }
 
 .main-screen .mesh .mesh-cell {
