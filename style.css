@@ -185,11 +185,11 @@ body {
   transition: background-color 0.25s ease-out;
 }
 
-.mesh-cell.hovered {
+.main-screen .mesh .mesh-cell.hovered {
   background-color: rgba(139, 139, 139, 0.25);
 }
 
-.mesh-cell.clicked {
+.main-screen .mesh .mesh-cell.clicked {
   background-color: rgb(73, 73, 73);
 }
 
