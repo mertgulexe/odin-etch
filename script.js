@@ -1,6 +1,7 @@
 let isMouseDown = false;
 let penColor = "gray";
 let initialPenColorOpacity = 0.25;
+const DEFAULT_PEN_COLOR = "rgb(73, 73, 73)";
 const HOVER_CLASS_NAME = "hovered";
 const MESH_CONTENT_CLASS_NAME = ".mesh-content";
 const BUTTON_CLICK_CLASS_NAME = "clicked";
@@ -98,6 +99,7 @@ function setDrawingColor(event) {
         currentTarget.classList.remove(HOVER_CLASS_NAME);
     } else {
         const isAlreadyColored = currentTarget.classList.contains(BUTTON_CLICK_CLASS_NAME);
+        currentTarget.style.backgroundColor = DEFAULT_PEN_COLOR;
         currentTarget.classList.add(BUTTON_CLICK_CLASS_NAME);
         currentTarget.classList.remove(HOVER_CLASS_NAME);
         if (isAlreadyColored) {
