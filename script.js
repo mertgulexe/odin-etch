@@ -1,5 +1,5 @@
 let isMouseDown = false;
-let defaultPenColor = "#494949";
+let initialPenColorOpacity = 0.25;
 const HOVER_CLASS_NAME = "hovered";
 const RANDOM_COLOR_CLASS_NAME = "random-color";
 const MESH_CONTENT_CLASS_NAME = ".mesh-content";
@@ -107,22 +107,38 @@ function setDrawingColor(event) {
         currentTarget.style.backgroundColor = randomColor;
         currentTarget.classList.remove(HOVER_CLASS_NAME);
     } else {
-        currentTarget.style.backgroundColor = defaultPenColor;
+        const isAlreadyColored = currentTarget.classList.contains(BUTTON_CLICK_CLASS_NAME);
+        currentTarget.classList.add(BUTTON_CLICK_CLASS_NAME);
         currentTarget.classList.remove(HOVER_CLASS_NAME);
+        console.log(isAlreadyColored);
+        if (isAlreadyColored) {
+            setPenColorOpacity(currentTarget);
+        } else {
+            currentTarget.style.opacity = initialPenColorOpacity;
+        };
     }
+}
+
+function setPenColorOpacity(element) {
+    let currentPenColorOpacity = parseFloat(element.style.opacity);
+    const isStillTransparent = currentPenColorOpacity < 1;
+    if (isStillTransparent) {
+        currentPenColorOpacity += 0.25;
+        element.style.opacity = currentPenColorOpacity;
+    };
 }
 
 /* TODO:
 [x] Randomise defaultPenColor color.
 [x] Add animations to buttons.
 [x] Add transitionend and event.propertyName === "transform" to animated buttons.
-[] Change the color of the pressed button.
+[ ] Change the color of the pressed button.
 [x] Change the color of the buttons altogether. They are ugly!
-[] Change the title.
+[x] Change the title.
 [x] Fix the title box overflow (it is larger than the mesh box).
-[] Add footer with links to the original project and my GitHub.
-[] Change font type, color and transparency.
-[] Check performance drop on large meshes while dev tool is open!
+[x] Add footer with links to the project repository.
+[x] Change font type, color and transparency.
+[ ] Check performance drop on large meshes while dev tool is open!
     * It is probably due to dynamically created flex items.
     * Grid is not allowed in this project, so I cannot use it.
 */
