@@ -3,6 +3,7 @@ let defaultPenColor = "#494949";
 const HOVER_CLASS_NAME = "hovered";
 const RANDOM_COLOR_CLASS_NAME = "random-color";
 const MESH_CONTENT_CLASS_NAME = ".mesh-content";
+const BUTTON_CLICK_CLASS_NAME = "clicked";
 const entireFrame = document.querySelector(".entire-frame");
 const mesh = document.querySelector(".mesh");
 const MESH_HEIGHT = mesh.clientHeight;
@@ -24,14 +25,33 @@ sizingButton.forEach(button => {
             event.currentTarget.dataset.xAxis,
             event.currentTarget.dataset.yAxis
         );
-        event.currentTarget.classList.add("clicked");
+        const target = event.currentTarget;
+        requestAnimationFrame(() => target.classList.add(BUTTON_CLICK_CLASS_NAME));
+    });
+    button.addEventListener("transitionend", event => {
+        const target = event.currentTarget;
+        if (event.propertyName === "transform") {
+            setTimeout(
+                () => target.classList.remove(BUTTON_CLICK_CLASS_NAME),
+                Math.floor(Math.random() * 2000) + 200
+            );
+        }
     });
 });
 sweepButton.addEventListener("click", resetMesh);
-colorButton.addEventListener("click", () => {
+colorButton.addEventListener("click", (event) => {
+    const target = event.currentTarget;
+    const isGrayscale = !target.classList.contains(BUTTON_CLICK_CLASS_NAME);
     meshContent.forEach((div) => {
         div.classList.toggle(RANDOM_COLOR_CLASS_NAME);
-    })
+    });
+    requestAnimationFrame(
+        () => {
+            target.classList.toggle(BUTTON_CLICK_CLASS_NAME);
+            let buttonText = target.querySelector("span").textContent;
+            buttonText = isGrayscale ? "Greyscale": "Colorize";
+        }
+    );
 });
 
 function setMeshSize(xAxis=10, yAxis=20) {
@@ -61,7 +81,7 @@ function addColorEventListeners(element) {
         const isUncolored = currentTarget.style.backgroundColor === '';
         if (isUnhovered && isUncolored) {
             currentTarget.classList.add(HOVER_CLASS_NAME);
-        }        
+        }
         if (isMouseDown) setDrawingColor(e);
     });
     element.addEventListener("transitionend", e => {
@@ -79,7 +99,9 @@ function resetMesh(event) {
 function setDrawingColor(event) {
     const currentTarget = event.currentTarget;
     if (currentTarget.classList.contains(RANDOM_COLOR_CLASS_NAME)) {
-        currentTarget.style.backgroundColor = "red";
+        let randomColor = Math.floor(Math.random() * (16**8 - 1));  // alpha channel included
+        randomColor = randomColor.toString(16).padStart(9, '#');
+        currentTarget.style.backgroundColor = randomColor;
         currentTarget.classList.remove(HOVER_CLASS_NAME);
     } else {
         currentTarget.style.backgroundColor = defaultPenColor;
@@ -88,13 +110,13 @@ function setDrawingColor(event) {
 }
 
 /* TODO:
-[] Randomise defaultPenColor color.
-[] Add animations to buttons.
-[] Add transitionend and event.propertyName === "transform" to animated buttons.
+[x] Randomise defaultPenColor color.
+[x] Add animations to buttons.
+[x] Add transitionend and event.propertyName === "transform" to animated buttons.
 [] Change the color of the pressed button.
-[] Change the color of the buttons altogether. They are ugly!
+[x] Change the color of the buttons altogether. They are ugly!
 [] Change the title.
-[] Fix the title box overflow (it is larger than the mesh box).
+[x] Fix the title box overflow (it is larger than the mesh box).
 [] Add footer with links to the original project and my GitHub.
 [] Change font type, color and transparency.
 [] Check performance drop on large meshes while dev tool is open!
