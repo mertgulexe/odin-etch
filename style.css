@@ -68,8 +68,8 @@ body {
   border-radius: 20px;
 }
 
-.entire-frame .right-section,
-.entire-frame .left-section .bottom-slider,
+.entire-frame .color-button,
+.entire-frame .left-section .sweep-button,
 .entire-frame .left-section .sizing-button-container .sizing-button {
   cursor: pointer;
   background-color: var(--crimson);
@@ -106,7 +106,7 @@ body {
   transform: rotate(-125deg);
 }
 
-.entire-frame .right-section {
+.entire-frame .color-button {
   margin-top: calc(55px * 3);
   margin-bottom: auto;
   margin-left: -8px;
@@ -118,15 +118,15 @@ body {
   align-items: center;
 }
 
-.entire-frame .right-section span {
+.entire-frame .color-button span {
   transform: rotate(-90deg);
 }
 
-.entire-frame .right-section.clicked {
+.entire-frame .color-button.clicked {
   transform: translateY(345px) rotate(-1989deg);
 }
 
-.entire-frame .bottom-slider {
+.entire-frame .sweep-button {
   margin-top: -8px;
   margin-left: 55px;
   height: 35px;
@@ -138,7 +138,7 @@ body {
   transform: rotate(2deg);
 }
 
-.entire-frame .bottom-slider.right-side {
+.entire-frame .sweep-button.right-side {
   transform: translateX(calc(800px - 55px)) rotate(-2deg);
 }
 
