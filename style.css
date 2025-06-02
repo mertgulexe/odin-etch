@@ -11,7 +11,7 @@ html {
 }
 
 :root {
-  --crimson: #A63C3C;
+  --crimson: #d9695ae0;
   --crimson-transparent: #A63C3C3f;
   --red: #D9685A;
   --red-transparent: #D9685A3f;
@@ -103,9 +103,10 @@ body {
 
 .entire-frame .right-section {
   margin-top: calc(55px * 3);
+  margin-bottom: auto;
   margin-left: -8px;
   width: 35px; 
-  height: 75px;
+  height: 85px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -114,6 +115,10 @@ body {
 
 .entire-frame .right-section span {
   transform: rotate(-90deg);
+}
+
+.entire-frame .right-section.clicked {
+  transform: translateY(345px) rotate(-1989deg);
 }
 
 .entire-frame .bottom-slider {
@@ -135,7 +140,7 @@ body {
 .main-screen .title {
   background-color: var(--crimson-transparent);
   height: 50px;
-  width: 90%;
+  width: 80%;
   text-align: center;
   display: flex;
   justify-content: center;
